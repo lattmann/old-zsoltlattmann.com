@@ -1,7 +1,18 @@
 <html>
 <head>
 </head>
-<body>
-blank
+<body onhashchange="changeColor();" onload="changeColor();">
+  <script type="text/javascript">
+    function changeColor() {
+      var color = 'black';
+
+      if (window.location.hash) {
+        // TODO: maybe we should validate if it is a color or hex?
+        color = window.location.hash.substr(1); // strip hash
+      }
+
+      window.document.body.style.backgroundColor = color;
+    }
+  </script>
 </body>
 </html>
