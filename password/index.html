@@ -1,0 +1,152 @@
+<html>
+<head>
+  <style>
+  body, input[type="text"], input[type="number"], button {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 16pt;
+  }
+  input[type="text"] {
+    width: 100%;
+  }
+  button {
+    background-color: lightblue;
+    border: none;
+    cursor: pointer;
+  }
+  span {
+    display: block;
+  }
+
+  span.title {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  </style>
+</head>
+<body onload="ready();">
+  <input id="word" autofocus placeholder="Type here a password to test ..." type="text" onkeyup="updatePasswords()"/>
+
+  <span id="password-word-only" class="password"></span>
+
+  <hr />
+  <span class="title">History</span>
+  <span id="history"></span>
+
+  <hr />
+  <button onclick="updateGeneratedPasswords();">Regenerate</button>
+  <span class="title">Generated passwords</span>
+
+  <span id="password" class="password" ></span>
+  <span id="password-mac" class="password" ></span>
+  <span id="password-random" class="password" ></span>
+  <span id="password-guid" class="password" ></span>
+
+
+  <script type="text/javascript" src="chance.min.js"></script>
+  <script type="text/javascript" src="zxcvbn.js"></script>
+  <script type="text/javascript">
+    var wordEl,
+
+      historyEl,
+
+      passwordWordOnlyEl,
+      passwordEl,
+      passwordRandomEl,
+      passwordUUIDEl,
+      passwordMacEl,
+
+      passwords = {},
+
+      chance;
+
+    function ready() {
+      chance = new Chance();
+
+      wordEl = document.getElementById('word');
+      historyEl = document.getElementById('history');
+
+      passwordWordOnlyEl = document.getElementById('password-word-only');
+      passwordEl = document.getElementById('password');
+      passwordRandomEl = document.getElementById('password-random');
+      passwordGUIDEl = document.getElementById('password-guid');
+      passwordMacEl = document.getElementById('password-mac');
+
+      wordEl.value = '';
+
+      updatePasswords();
+      updateGeneratedPasswords();
+    }
+
+    function estimateComplexity(spanEl) {
+      result = zxcvbn(spanEl.textContent, []);
+      console.log(result);
+      spanEl.textContent += ' offline: ' + result.crack_times_display.offline_fast_hashing_1e10_per_second;
+      spanEl.textContent += ' online: ' + result.crack_times_display.online_no_throttling_10_per_second;
+      spanEl.textContent += ' [' + result.score + ']';
+      return result;
+    }
+
+    function updatePasswords() {
+      passwordWordOnlyEl.textContent = word.value;
+      var result = estimateComplexity(passwordWordOnlyEl);
+
+
+      if (passwords.hasOwnProperty(word.value)) {
+
+      } else {
+        passwords[word.value] = result;
+      }
+
+      var historyText = '';
+      while (historyEl.firstChild) {
+        historyEl.removeChild(historyEl.firstChild);
+      }
+
+      var keys = Object.keys(passwords);
+      var values = keys.map(function(v) { return passwords[v]; });
+      values.sort(function (a, b) {
+        return b.guesses - a.guesses;
+      });
+      for (var i = 0; i < values.length && i < 10; i += 1) {
+          var newSpan = document.createElement('span');
+          historyText = chance.pad(i + 1, 2) + '. ';
+          historyText += values[i].password + ' ';
+          historyText += ' offline: ' + values[i].crack_times_display.offline_fast_hashing_1e10_per_second;
+          historyText += ' online: ' + values[i].crack_times_display.online_no_throttling_10_per_second;
+          historyText += ' [' + values[i].score + ']';
+          newSpan.textContent = historyText;
+          historyEl.appendChild(newSpan);
+      }
+    }
+
+    function updateGeneratedPasswords() {
+      passwordRandomEl.textContent = chance.string({length: 20});
+      estimateComplexity(passwordRandomEl);
+
+      passwordGUIDEl.textContent = chance.guid();
+      estimateComplexity(passwordGUIDEl);
+
+      // B7V-YTa-GYo-zLf
+      var opts = {
+        pool: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
+        length: 3
+      };
+
+      passwordMacEl.textContent = chance.string(opts) +
+        '-' + chance.string(opts) +
+        '-' + chance.string(opts) +
+        '-' + chance.string(opts);
+
+      estimateComplexity(passwordMacEl);
+
+
+      passwordEl.textContent = chance.capitalize(chance.word({length: 5})) +
+        '-' + chance.capitalize(chance.word({length: 5})) +
+        ':' + chance.pad(chance.integer({min: 0, max: 9999}), 4) +
+        '!';
+      estimateComplexity(passwordEl);
+    }
+
+  </script>
+</body>
+</html>
