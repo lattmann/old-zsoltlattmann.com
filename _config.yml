@@ -1,0 +1,8 @@
+title: Zsolt Lattmann
+description: My personal website
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-minimal
+
+gems:
+  - jekyll-mentions
