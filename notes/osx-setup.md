@@ -63,7 +63,7 @@ git clone git@github.com:lycophron/old.lycophron.git
 git clone git@github.com:lycophron/lycophron.org.git
 git clone git@github.com:lycophron/lycophron.github.io.git
 
-git clone git@github.com:lattmann/app.lycophron.git
+git clone git@github.com:lattmann/lycophron-app.git
 git clone git@github.com:lattmann/zsoltlattmann.com.git
 
 git clone git@github.com:webgme/webgme.git
