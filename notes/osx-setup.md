@@ -6,7 +6,7 @@ categories: [osx, shell, script]
 desc: "Install a set of tools on a new OSX machine."
 ---
 
-[Back to home page][/]
+[Back to home page][http://zsoltlattmann.com/]
 
 # Configuration
 
