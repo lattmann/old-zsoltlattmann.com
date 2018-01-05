@@ -6,6 +6,18 @@ categories: [osx, shell, script]
 desc: "Install a set of tools on a new OSX machine."
 ---
 
+[Back to home page][/]
+
+# Configuration
+
+- Change user password
+- Change trackpad settings
+- Change dock settings
+- Setup fingerprint if applicable
+- Sign in to App Store
+- Sign in to iTunes
+- Sign in to iCloud
+
 # Tools
 
 - [Oh-My-Zsh](http://ohmyz.sh/)
@@ -19,7 +31,6 @@ npm install -g nodemon
 ```
 - MacTex
 ```bash
-brew install caskroom/cask/brew-cask
 brew cask install mactex
 ```
 - [Google Drive](https://www.google.com/drive/download/)
@@ -27,11 +38,14 @@ brew cask install mactex
 - [Flux](https://justgetflux.com/)
 - [Docker Toolbox](https://www.docker.com/products/docker-toolbox)
 - [Atom](https://atom.io/)
+```bash
+apm install nuclide
+```
 
 # Configuration
 
 - [vimrc](https://github.com/amix/vimrc)
-- Copy private and public key
+- Copy private and public key into `~/.ssh` folder
 - Update public key on GitHub and BitBucket if required.
 - Create ssh config
 
@@ -49,6 +63,7 @@ git clone git@github.com:lycophron/old.lycophron.git
 git clone git@github.com:lycophron/lycophron.org.git
 git clone git@github.com:lycophron/lycophron.github.io.git
 
+git clone git@github.com:lattmann/app.lycophron.git
 git clone git@github.com:lattmann/zsoltlattmann.com.git
 
 git clone git@github.com:webgme/webgme.git
