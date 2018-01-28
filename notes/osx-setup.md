@@ -27,6 +27,8 @@ brew cask install mactex
 - [Flux](https://justgetflux.com/)
 - [Docker Toolbox](https://www.docker.com/products/docker-toolbox)
 - [Atom](https://atom.io/)
+- [Keybase.io](https://keybase.io/download)
+- [Flash Player](https://get.adobe.com/flashplayer/otherversions/)
 
 # Configuration
 
